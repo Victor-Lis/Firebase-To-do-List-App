@@ -1,21 +1,78 @@
 import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-export default function Login() {
+import firebase from '../Connections/firebaseConnection'
+
+export default function Login({changeStatus}) {
 
     const [type, setType] = useState("login")
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleLogin(){
+    function checkLogin(){
 
-        alert("Cu")
+        if(email[email.length - 1] == " "){
+
+            let newEmail = '';
+
+            for(var i = 0; i < (email.length - 1); i++){
+
+                newEmail = newEmail+email[i]
+
+            }
+
+            setEmail(newEmail.toLowerCase())
+
+        }else{
+
+            handleLogin()
+
+        }
+
+    }
+
+    function handleLogin(){
+    
+        if(type === "login"){
+
+            const user = firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => {
+                
+                changeStatus(user.user.uid)
+                alert("Login bem sucedido")
+
+            })
+            .catch(err => {
+
+                alert(err.message)
+                console.log("Algo deu errado!")
+
+            })
+
+        }else{
+
+            const user = firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => {
+                
+                changeStatus(user.user.uid)
+                alert("Cadastro bem sucedido")
+            
+            })
+            .catch(err => {
+
+                alert(err.message)
+                console.log("Algo deu errado!")
+
+            })
+
+        }
 
     }
 
  return (
    <SafeAreaView style={styles.container}>
-
+        <StatusBar style="auto" hidden={true}/>
         <TextInput
             placeholder='Seu email:'
             style={styles.input}
@@ -32,7 +89,7 @@ export default function Login() {
 
         <TouchableOpacity
             style={[styles.handleLogin, {backgroundColor: type == "login"? "#3ea6f2": "#141414"}]}
-            onPress={handleLogin}
+            onPress={checkLogin}
         >
 
             <Text style={styles.loginText}> {type == "login"? "Acessar": "Cadastrar"} </Text> 
@@ -54,7 +111,7 @@ const styles = StyleSheet.create({
     container: {
 
         flex: 1,
-        paddingTop: 40,
+        paddingTop: 20,
         backgroundColor: "#f2f6fc",
         paddingHorizontal: 10,
 

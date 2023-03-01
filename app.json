@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "bd-todo-list-app",
+    "name": "Todo App",
     "slug": "bd-todo-list-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "dev_victor.firebase_todo_list_app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "66a06556-8828-4cc2-8bdd-7a4f88fe74fd"
+      }
     }
   }
 }
