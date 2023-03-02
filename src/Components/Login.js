@@ -10,39 +10,19 @@ export default function Login({changeStatus}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function checkLogin(){
+    function handleLogin(){
+    
+        let newEmail = '';
 
         if(email[email.length - 1] === " "){
 
-            let newEmail = email.slice(0, -1)
-
-            firebase.auth().signInWithEmailAndPassword(newEmail, password)
-            .then(user => {
-                
-                changeStatus(user.user.uid)
-                console.log("Login bem sucedido")
-
-            })
-            .catch(err => {
-
-                alert(err.message)
-                console.log("Algo deu errado!")
-
-            })
-
-        }else{
-
-            handleLogin(email)
+            newEmail = email.slice(0, -1)
 
         }
 
-    }
-
-    function handleLogin(email){
-    
         if(type === "login"){
 
-            const user = firebase.auth().signInWithEmailAndPassword(email, password)
+            const user = firebase.auth().signInWithEmailAndPassword((newEmail == ''? email : newEmail), password)
             .then(user => {
                 
                 changeStatus(user.user.uid)
@@ -58,7 +38,7 @@ export default function Login({changeStatus}) {
 
         }else{
 
-            const user = firebase.auth().createUserWithEmailAndPassword(email, password)
+            const user = firebase.auth().createUserWithEmailAndPassword((newEmail == ''? email : newEmail), password)
             .then(user => {
                 
                 changeStatus(user.user.uid)
@@ -95,7 +75,7 @@ export default function Login({changeStatus}) {
 
         <TouchableOpacity
             style={[styles.handleLogin, {backgroundColor: type == "login"? "#3ea6f2": "#141414"}]}
-            onPress={() => checkLogin(email)}
+            onPress={() => handleLogin()}
         >
 
             <Text style={styles.loginText}> {type == "login"? "Acessar": "Cadastrar"} </Text> 
