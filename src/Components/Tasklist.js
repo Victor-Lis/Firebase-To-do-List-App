@@ -1,11 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
-export default function Tasklist({data}) {
+import Feather from 'react-native-vector-icons/Feather'
+
+export default function Tasklist({data, deleteItem, editItem}) {
  return (
-   <View>
+   <View style={styles.container}>
 
-        <Text> {data.nome} </Text>
+      <TouchableOpacity style={{marginRight: 10}} onPress={() => deleteItem(data.key)}>
+
+        <Feather name="trash" color='#fff' size={22}/>
+
+      </TouchableOpacity>
+
+      <TouchableWithoutFeedback style={{paddingRight: 10}} onPress={() => editItem(data)}>
+
+        <Text style={{color: "#fff", paddingRight: 10}}> {data.nome} </Text>
+
+      </TouchableWithoutFeedback>
 
    </View>
   );
@@ -14,36 +26,11 @@ export default function Tasklist({data}) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: 25,
-      paddingHorizontal: 10,
-      backgroundColor: "#f2f6fc",
-    },
-    containerTask: {
-  
-      flexDirection: "row"
-  
-    },
-    input: {
-  
-      flex: 1,
-      marginBottom: 10,
-      backgroundColor: "#fff",
-      borderRadius: 5,
-      height: 45,
+      flexDirection: 'row',
+      backgroundColor: "#121212",
+      alignItems: "center",
       padding: 10,
-      borderWidth: 0.5,
-      borderColor: "#141414",
-  
-    },
-    buttonAdd: {
-  
-      backgroundColor: "#141414",
-      height: 45,
-      alignItems: 'center',
-      justifyContent: "center",
-      marginLeft: 5,
-      paddingHorizontal: 15,
+      marginBottom: 10,
       borderRadius: 5,
-  
-    }
-  });
+    },
+});
