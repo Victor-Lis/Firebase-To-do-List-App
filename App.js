@@ -125,7 +125,7 @@ export default function App() {
 
       tarefas.child(chave).set({
 
-        nome:task
+        nome: task
 
       })
       .then(() => {

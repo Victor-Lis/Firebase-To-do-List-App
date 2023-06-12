@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "dev-victor.firebase-todo-list"
     },
     "android": {
       "adaptiveIcon": {
